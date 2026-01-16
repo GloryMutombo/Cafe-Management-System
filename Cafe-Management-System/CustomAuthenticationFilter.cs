@@ -13,7 +13,7 @@ using System.Net.Http;
 
 namespace Cafe_Management_System
 {
-    public class CustomAuthenticationFilter: AuthorizeAttribute, IAuthenticationFilter
+    public class CustomAuthenticationFilter : AuthorizeAttribute, IAuthenticationFilter
     {
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
@@ -31,7 +31,7 @@ namespace Cafe_Management_System
         public async Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
             var result = await context.Result.ExecuteAsync(cancellationToken);
-            if(result.StatusCode == HttpStatusCode.Unauthorized)
+            if (result.StatusCode == HttpStatusCode.Unauthorized)
             {
                 result.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue("Basic", "real=localhost"));
             }
@@ -41,9 +41,9 @@ namespace Cafe_Management_System
 
     public class AuthenticationFailureResult : IHttpActionResult
     {
-       public AuthenticationFailureResult() { }
-        
-        public async Task<HttpResponseMessage> ExecuteAsync( CancellationToken cancellationToken)
+        public AuthenticationFailureResult() { }
+
+        public async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var responseMessage = new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized);
             return await Task.FromResult(responseMessage);
